@@ -1,7 +1,7 @@
 {
-  "name": "vue-admin-template-lisa",
+  "name": "admin-lisa",
   "version": "4.4.0",
-  "description": "asss",
+  "description": "asssss",
   "author": "<llszbdo@163.com>",
   "scripts": {
     "dev": "vue-cli-service serve",
