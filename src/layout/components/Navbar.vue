@@ -33,6 +33,8 @@
 
 <script>
 import { mapGetters } from 'vuex'
+import { removeToken } from '@/utils/auth'
+import { resetRouter } from '@/router'
 import Breadcrumb from '@/components/Breadcrumb'
 import Hamburger from '@/components/Hamburger'
 
@@ -53,7 +55,9 @@ export default {
     },
     async logout() {
       await this.$store.dispatch('user/logout')
-      this.$router.push(`/login?redirect=${this.$route.fullPath}`)
+      this.$router.replace({path: '/login'})
+      location.reload();
+      // this.$router.push(`/login?redirect=${this.$route.fullPath}`)
     }
   }
 }
