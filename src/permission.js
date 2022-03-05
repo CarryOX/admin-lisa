@@ -3,7 +3,7 @@ import store from './store'
 import { Message } from 'element-ui'
 import NProgress from 'nprogress'
 import 'nprogress/nprogress.css'
-import { getToken } from '@/utils/auth'
+import { getToken, getPermission } from '@/utils/auth'
 import getPageTitle from '@/utils/get-page-title'
 
 NProgress.configure({ showSpinner: false }) // NProgress Configuration
@@ -20,19 +20,25 @@ router.beforeEach(async(to, from, next) => {
 
   if (hasToken) {
     if (to.path === '/login') {
-      // if is logged in, redirect to the home page
       next({ path: '/' })
       NProgress.done()
     } else {
-      const hasGetUserInfo = store.getters.name
-      if (hasGetUserInfo) {
+      if (store.getters.addRouters.length) {
         next()
       } else {
         try {
-          // get user info
-          // await store.dispatch('user/getInfo')
+          let roles = JSON.parse(getPermission() || store.getters.permissions)
+          roles.push('vipsign','shareholdersign','authority')
+          console.log('roles',roles)
+          store.dispatch('GenerateRoutes', { roles }).then(() => { // 生成可访问的路由表
+            router.addRoutes(store.getters.routerList) // 动态添加可访问路由表
+            console.log('store.getters.routers',store.getters.addRouters)
+            console.log('store.getters.routerList',store.getters.routerList)
+            console.log('router',router)
+            next({ ...to, replace: true })
+          })
+          // next()
 
-          next()
         } catch (error) {
           // remove token and go to login page to re-login
           await store.dispatch('user/resetToken')
