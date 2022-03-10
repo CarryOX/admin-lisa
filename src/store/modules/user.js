@@ -7,6 +7,7 @@ const getDefaultState = () => {
     token: getToken(),
     avatar: '',
     permissions: [],
+    isSuper: ""
   }
 }
 
@@ -24,6 +25,9 @@ const mutations = {
   },
   SET_PERMISSION: (state, permissions) => {
     state.permissions = permissions
+  },
+  SET_SUPER: (state, value) => {
+    state.isSuper = value;
   }
 }
 
@@ -36,6 +40,7 @@ const actions = {
         const { data } = response
         commit('SET_TOKEN', data.access_token)
         commit('SET_PERMISSION', data.admin_auth)
+        commit("SET_SUPER", data.admin_is_super)
         setPermission(data.admin_auth)
         setToken(data.access_token)
         resolve()

@@ -31,3 +31,5 @@ export function setPermission(permission) {
 export function getPermission() {
   return Cookies.get(PermissionKey)
 }
+
+

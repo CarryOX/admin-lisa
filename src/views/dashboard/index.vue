@@ -1,6 +1,8 @@
 <template>
   <div class="dashboard-container">
-    <div class="dashboard-text">name</div>
+    <div class="dashboard-container" id="home">
+      <el-image :src="require('@/assets/noinformation.png')" alt="" style="width: 700px; margin:0 auto; display:block"></el-image>
+    </div>
   </div>
 </template>
 
